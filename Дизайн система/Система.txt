@@ -1,0 +1,5 @@
+Text: Microhama, secondary text: inter 
+RGB (4,45,34)
+RGB(230,255,85)
+RGB(201,220,234)
+Grid 40px, Margin 120px, Gutter 20 px

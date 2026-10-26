@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title_stories">AirL — Stories | Історії мандрівників та Seen in Motion</title>
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/responsive.css?v=3.2">
+  <style>
+    .stories-hero {
+      padding: 140px 0 50px;
+      text-align: center;
+    }
+    .stories-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 16px;
+    }
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .story-card {
+      background: var(--c-surface-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+      cursor: pointer;
+    }
+    .story-card:hover {
+      border-color: var(--c-border-active);
+      transform: translateY(-5px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+    .story-img-wrap {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+    .story-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .story-card:hover .story-img-wrap img {
+      transform: scale(1.05);
+    }
+    .story-tag-float {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(4, 45, 34, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      color: var(--c-neon-lime);
+      border: 1px solid rgba(230, 255, 85, 0.3);
+    }
+    .story-content {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .story-creator-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .creator-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--c-neon-lime);
+      color: var(--c-text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .creator-meta {
+      font-size: 0.8rem;
+      color: var(--c-glacial-ice);
+    }
+    .creator-name {
+      font-weight: 700;
+      color: #fff;
+    }
+    .story-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .story-excerpt {
+      font-size: 0.9rem;
+      color: var(--c-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    /* LUTs Banner */
+    .luts-banner {
+      margin-top: 80px;
+      background: radial-gradient(circle at 10% 50%, rgba(230, 255, 85, 0.15) 0%, rgba(4, 45, 34, 0.6) 60%, rgba(2, 6, 4, 0.9) 100%);
+      border: 1px solid var(--c-border-active);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .luts-visual {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--c-border-subtle);
+    }
+    @media (max-width: 900px) {
+      .stories-grid {
+        grid-template-columns: 1fr;
+      }
+      .luts-banner {
+        grid-template-columns: 1fr;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle-btn" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+          <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+          <li><a href="stories.html" class="active" data-i18n="nav_stories">Історії</a></li>
+          <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+        </ul>
+      </div>
+
+      <a href="index.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </a>
+
+      <div class="header-right">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <span class="lang-globe-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </span>
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <span class="lang-divider"></span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <button class="cart-btn" aria-label="View Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </button>
+
+        <button class="btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:24px; height:24px;">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </div>
+      <button class="mobile-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="drones.html" data-i18n="nav_drones">Дрони <span>&rarr;</span></a></li>
+      <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари <span>&rarr;</span></a></li>
+      <li><a href="stories.html" class="active" data-i18n="nav_stories">Історії <span>&rarr;</span></a></li>
+      <li><a href="support.html" data-i18n="nav_support">Підтримка <span>&rarr;</span></a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <div class="lang-switch" role="group" aria-label="Language selector" style="width:fit-content;">
+        <span class="lang-globe-icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+        <button class="lang-btn active" data-lang="ua">UA</button>
+        <span class="lang-divider"></span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="btn-checkout btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+    </div>
+  </aside>
+
+  <!-- Stories Hero -->
+  <section class="stories-hero">
+    <div class="container">
+      <div class="badge-tag">
+        <span class="dot"></span>
+        <span data-i18n="stories_badge">SEEN IN MOTION · EXPEDITIONS</span>
+      </div>
+      <h1 data-i18n="page_stories_title">Історії з експедицій мандрівників</h1>
+      <p data-i18n="page_stories_sub" style="max-width: 680px; margin: 0 auto;">
+        Подивіться, як світові тревел-креатори віком 20-40 років знімають найвіддаленіші куточки планети на AirL.
+      </p>
+
+      <!-- Stories Grid -->
+      <div class="stories-grid">
+        <!-- Story 1: Dolomites -->
+        <article class="story-card" onclick="document.getElementById('reelsModal').classList.add('active')">
+          <div class="story-img-wrap">
+            <span class="story-tag-float" data-i18n="story1_tag">ALPS · ITALY</span>
+            <img src="assets/images/hero-drone.jpg" alt="Dolomites Sunrise">
+          </div>
+          <div class="story-content">
+            <div class="story-creator-row">
+              <div class="creator-avatar">OM</div>
+              <div class="creator-meta">
+                <div class="creator-name" data-i18n="story1_creator">Олена Мельник, 33</div>
+                <span data-i18n="story1_role">Гірський гід та тревел-блогер</span>
+              </div>
+            </div>
+            <h3 class="story-title" data-i18n="story1_title">Сходження на Tre Cime на світанку: Чому 249г змінили мої походи</h3>
+            <p class="story-excerpt" data-i18n="story1_excerpt">
+              Кожен зайвий кілограм у рюкзаку на висоті 2800м — це біль. З AirL—7 я отримала повноцінний 8K 10-bit сенсор, який важить менше пляшки води.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-lime" style="font-size:0.85rem; font-weight:700;" data-i18n="read_report">Читати репортаж &rarr;</span>
+              <span class="tag-neon-pill">8K HDR</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 2: Iceland Waterfalls -->
+        <article class="story-card" onclick="document.getElementById('reelsModal').classList.add('active')">
+          <div class="story-img-wrap">
+            <span class="story-tag-float" data-i18n="story2_tag">ICELAND · WILD CANYONS</span>
+            <img src="assets/images/forest-obstacle.jpg" alt="Icelandic Storm Flight">
+          </div>
+          <div class="story-content">
+            <div class="story-creator-row">
+              <div class="creator-avatar">MC</div>
+              <div class="creator-meta">
+                <div class="creator-name" data-i18n="story2_creator">Маркус Чен, 28</div>
+                <span data-i18n="story2_role">Cinematographer & Drone Pilot</span>
+              </div>
+            </div>
+            <h3 class="story-title" data-i18n="story2_title">Водоспади Ісландії при шквальному вітрі 14 м/с</h3>
+            <p class="story-excerpt" data-i18n="story2_excerpt">
+              Ми знімали каньйон Скоугафосс у морозний шторм з водяним пилом. Вологозахист IP54 та потужні безколекторні мотори тримали лінію горизонту як на штативі.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-lime" style="font-size:0.85rem; font-weight:700;" data-i18n="read_report">Читати репортаж &rarr;</span>
+              <span class="tag-neon-pill">IP54 TEST</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 3: Carpathian Ridges -->
+        <article class="story-card" onclick="document.getElementById('reelsModal').classList.add('active')">
+          <div class="story-img-wrap">
+            <span class="story-tag-float" data-i18n="story3_tag">CARPATHIANS · UKRAINE</span>
+            <img src="assets/images/mobile-reels.jpg?v=3.4" alt="Carpathian Ridge Flight">
+          </div>
+          <div class="story-content">
+            <div class="story-creator-row">
+              <div class="creator-avatar">AS</div>
+              <div class="creator-meta">
+                <div class="creator-name" data-i18n="story3_creator">Андрій Шевченко, 25</div>
+                <span data-i18n="story3_role">Adventure Filmmaker</span>
+              </div>
+            </div>
+            <h3 class="story-title" data-i18n="story3_title">Чорногірський хребет: Зйомка золотого туману над смереками</h3>
+            <p class="story-excerpt" data-i18n="story3_excerpt">
+              Смарт-пульт із яскравістю 2000 ніт дозволив бачити кожен піксель навіть проти сліпучого вранішнього сонця без бленд та капюшонів.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-lime" style="font-size:0.85rem; font-weight:700;" data-i18n="read_report">Читати репортаж &rarr;</span>
+              <span class="tag-neon-pill">2000 NITS</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 4: Lofoten Winter Aurora -->
+        <article class="story-card" onclick="document.getElementById('reelsModal').classList.add('active')">
+          <div class="story-img-wrap">
+            <span class="story-tag-float" data-i18n="story4_tag">NORWAY · ARCTIC CIRCLE</span>
+            <img src="assets/images/camera-sensor.jpg" alt="Arctic Night Flight">
+          </div>
+          <div class="story-content">
+            <div class="story-creator-row">
+              <div class="creator-avatar">AR</div>
+              <div class="creator-meta">
+                <div class="creator-name" data-i18n="story4_creator">Алекс Рівера, 36</div>
+                <span data-i18n="story4_role">National Geographic Explorer</span>
+              </div>
+            </div>
+            <h3 class="story-title" data-i18n="story4_title">Полювання на Північне сяйво при -15°C</h3>
+            <p class="story-excerpt" data-i18n="story4_excerpt">
+              Завдяки функції внутрішнього підігріву акумуляторів AirL зміг провести 42 хвилини на морозі, зафіксувавши зелені переливи аврори в D-Log.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-lime" style="font-size:0.85rem; font-weight:700;" data-i18n="read_report">Читати репортаж &rarr;</span>
+              <span class="tag-neon-pill">-15°C COLD RUN</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Free LUTs Download Banner -->
+      <div class="luts-banner" id="luts">
+        <div>
+          <div class="badge-tag" style="margin-bottom: 12px;">
+            <span class="dot"></span>
+            <span data-i18n="luts_badge">CREATOR TOOLKIT</span>
+          </div>
+          <h2 class="font-display" style="font-size: 1.8rem; color: #fff; margin-bottom: 12px;" data-i18n="download_luts_title">
+            Безкоштовний фірмовий пакет AirL Travel LUTs
+          </h2>
+          <p style="margin-bottom: 24px;" data-i18n="download_luts_desc">
+            10 пресетів кольорокорекції (.cube) для кінематографічного кольору гір, океанів та заходу сонця. Сумісні з DaVinci Resolve, Premiere Pro та Final Cut.
+          </p>
+          <button class="btn-checkout" style="width: auto; padding: 12px 28px;" onclick="showToast(window.translations[document.documentElement.lang || 'ua'].notification_luts || 'LUTs link sent!');" data-i18n="btn_download_luts">
+            Завантажити LUTs (Безкоштовно)
+          </button>
+        </div>
+        <div class="luts-visual">
+          <img src="assets/images/camera-sensor.jpg" alt="AirL Cinematic LUTs">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reels Video Player Modal -->
+  <div class="modal-overlay" id="reelsModal">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close-btn" id="reelsCloseBtn">&times;</button>
+      <div class="badge-tag" style="margin-bottom: 12px;">
+        <span class="dot"></span>
+        <span data-i18n="modal_seen_motion">AIRL SEEN IN MOTION · 8K HDR REEL</span>
+      </div>
+      <img src="assets/images/mobile-reels.jpg?v=3.4" alt="Reel preview" style="border-radius:12px; margin: 15px 0;">
+      <h3 class="font-display" style="font-size:1.1rem; color:#fff; margin-bottom: 8px;" data-i18n="modal_reel_title">Dolomites Expedition 2026</h3>
+      <p style="font-size:0.85rem; color:var(--c-glacial-ice);" data-i18n="modal_reel_desc">Shot in 8K/60 D-Log with AirL—7 Cinema Drone at -12°C.</p>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3 class="font-display" data-i18n="cart_title">Ваш тревел-кошик</h3>
+      <button class="cart-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <div class="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span data-i18n="cart_total">Разом:</span>
+        <span class="cart-total-num">$0</span>
+      </div>
+      <p style="font-size:0.75rem; color:var(--c-glacial-ice); margin-bottom:14px;" data-i18n="cart_shipping_free">
+        Безкоштовна доставка по всьому світу включена
+      </p>
+      <button class="btn-checkout" data-i18n="cart_checkout_btn">Оформити замовлення</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="site-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+              <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+              <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+            </svg>
+            <span>AirL</span>
+          </div>
+          <p data-i18n="footer_desc">Інноваційні надлегкі кінематографічні дрони та обладнання для мандрівників.</p>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_quick_links">Навігація</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" data-i18n="nav_home">Головна (AirL—7)</a></li>
+            <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+            <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+            <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_travel_resources">Ресурси для мандрівників</h4>
+          <ul class="footer-links">
+            <li><a href="support.html#regulations" data-i18n="footer_air_rules">Правила польотів у подорожах</a></li>
+            <li><a href="support.html#batteries" data-i18n="footer_battery_guide">Гід із LiPo батарей у літаку</a></li>
+            <li><a href="support.html#warranty" data-i18n="footer_warranty">Глобальна заміна Care</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_newsletter_title">AirL Expedition Club</h4>
+          <p style="font-size:0.85rem;" data-i18n="footer_newsletter_sub">Отримуйте оновлення прошивок та тревел-гіди.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer_rights">© 2026 AirL Aerial Technologies. Усі права захищено. Сертифіковано AIRSAFE.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/translations.js?v=3.2"></script>
+  <script src="js/main.js?v=3.2"></script>
+</body>
+</html>

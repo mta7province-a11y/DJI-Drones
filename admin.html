@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirL — Database & Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/responsive.css?v=3.2">
+  <script src="js/translations.js?v=3.2"></script>
+  <style>
+    .admin-container {
+      padding: 120px clamp(20px, 5vw, 80px) 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--c-border-subtle);
+    }
+    .db-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(230, 255, 85, 0.15);
+      border: 1px solid var(--c-neon-lime);
+      color: var(--c-neon-lime);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-family: var(--font-display);
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--c-neon-lime);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--c-neon-lime);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gutter);
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--c-surface-card);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      backdrop-filter: blur(16px);
+    }
+    .stat-title {
+      font-size: 0.8rem;
+      color: var(--c-glacial-ice);
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: #fff;
+    }
+    .admin-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--c-border-subtle);
+      padding-bottom: 12px;
+      overflow-x: auto;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: 1px solid var(--c-border-subtle);
+      color: var(--c-glacial-ice);
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+    }
+    .admin-tab-btn.active, .admin-tab-btn:hover {
+      background: var(--c-neon-lime);
+      color: var(--c-text-dark);
+      border-color: var(--c-neon-lime);
+    }
+    .tab-content {
+      display: none;
+      background: var(--c-surface-card);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      backdrop-filter: blur(20px);
+      overflow-x: auto;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .db-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .db-table th, .db-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(201, 220, 234, 0.08);
+      font-size: 0.88rem;
+    }
+    .db-table th {
+      font-family: var(--font-display);
+      color: var(--c-neon-lime);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+    .db-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .db-badge-green { background: rgba(230, 255, 85, 0.2); color: var(--c-neon-lime); }
+    .db-badge-blue { background: rgba(201, 220, 234, 0.2); color: var(--c-glacial-ice); }
+    .btn-reload {
+      background: rgba(201, 220, 234, 0.1);
+      border: 1px solid var(--c-border-subtle);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-reload:hover {
+      background: var(--c-neon-lime);
+      color: var(--c-text-dark);
+    }
+    pre.code-json {
+      background: #020604;
+      border: 1px solid var(--c-border-subtle);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      color: var(--c-glacial-ice);
+      font-family: monospace;
+      font-size: 0.85rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    @media (max-width: 1024px) {
+      .stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .stat-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Precision Aerospace HUD Language Switcher */
+    .lang-switch {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      background: rgba(2, 20, 15, 0.85) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(230, 255, 85, 0.35) !important;
+      border-radius: 6px !important;
+      padding: 3px 6px !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(230, 255, 85, 0.12) !important;
+      position: relative !important;
+    }
+    .lang-globe-icon {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: var(--c-neon-lime) !important;
+      opacity: 0.85 !important;
+      padding: 0 4px 0 2px !important;
+    }
+    .lang-divider {
+      width: 1px !important;
+      height: 12px !important;
+      background: rgba(201, 220, 234, 0.25) !important;
+      margin: 0 2px !important;
+      display: inline-block !important;
+    }
+    .lang-btn {
+      position: relative !important;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      color: var(--c-glacial-ice) !important;
+      opacity: 0.7 !important;
+      padding: 4px 9px !important;
+      font-family: var(--font-display), sans-serif !important;
+      font-size: 0.72rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      border-radius: 4px !important;
+      cursor: pointer !important;
+      line-height: 1 !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .lang-btn:hover {
+      opacity: 1 !important;
+      color: #ffffff !important;
+      background: rgba(201, 220, 234, 0.08) !important;
+    }
+    .lang-btn.active {
+      opacity: 1 !important;
+      color: var(--c-neon-lime) !important;
+      background: linear-gradient(180deg, rgba(230, 255, 85, 0.18) 0%, rgba(4, 45, 34, 0.6) 100%) !important;
+      border: 1px solid rgba(230, 255, 85, 0.65) !important;
+      box-shadow: 0 0 12px rgba(230, 255, 85, 0.25), inset 0 0 8px rgba(230, 255, 85, 0.12) !important;
+      text-shadow: 0 0 8px rgba(230, 255, 85, 0.5) !important;
+    }
+    .lang-btn.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -2px !important;
+      left: 15% !important;
+      right: 15% !important;
+      height: 2px !important;
+      background: var(--c-neon-lime) !important;
+      border-radius: 2px !important;
+      box-shadow: 0 0 8px var(--c-neon-lime) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="admin_back_to_site">← На сайт AirL</a></li>
+          <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+          <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+        </ul>
+      </div>
+
+      <a href="index.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL DB</span>
+      </a>
+
+      <div class="header-right" style="display:flex; align-items:center; gap:16px;">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <span class="lang-globe-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </span>
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <span class="lang-divider"></span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <div class="db-status-badge">
+          <span class="pulse-dot"></span>
+          <span data-i18n="admin_db_online">DATABASE ONLINE</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <div>
+        <h1 class="font-display" style="font-size: 2rem; color: #fff; margin-bottom: 6px;" data-i18n="admin_title">
+          Керування базою даних AirL
+        </h1>
+        <p style="color: var(--c-glacial-ice);" data-i18n="admin_subtitle">
+          Розташування файлів бази даних: <code>папка антигравіті/data/</code> (.json сховище документів)
+        </p>
+      </div>
+
+      <button class="btn-reload" onclick="loadDbData()">
+        <span>&#x21bb;</span> <span data-i18n="admin_reload_btn">Оновити дані</span>
+      </button>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-title" data-i18n="admin_stat_orders">Всього замовлень (Orders)</div>
+        <div class="stat-value" id="statOrders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title" data-i18n="admin_stat_revenue">Сума продажів (Revenue)</div>
+        <div class="stat-value" id="statRevenue" style="color:var(--c-neon-lime);">$0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title" data-i18n="admin_stat_subscribers">Підписників клубу (Subscribers)</div>
+        <div class="stat-value" id="statSubs">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title" data-i18n="admin_stat_tickets">Запитів у підтримку (Tickets)</div>
+        <div class="stat-value" id="statTickets">0</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="switchTab('orders')" data-i18n="admin_tab_orders">📦 Замовлення (orders.json)</button>
+      <button class="admin-tab-btn" onclick="switchTab('subscribers')" data-i18n="admin_tab_subscribers">👥 Підписники (subscribers.json)</button>
+      <button class="admin-tab-btn" onclick="switchTab('tickets')" data-i18n="admin_tab_tickets">🎫 Консьєрж-тікети (tickets.json)</button>
+      <button class="admin-tab-btn" onclick="switchTab('products')" data-i18n="admin_tab_products">🏷️ Склад товарів (products.json)</button>
+      <button class="admin-tab-btn" onclick="switchTab('raw')" data-i18n="admin_tab_raw">💾 Прямий перегляд JSON</button>
+      <button class="admin-tab-btn" onclick="switchTab('help')" data-i18n="admin_tab_help">❓ Інструкція: Як запустити БД</button>
+    </div>
+
+    <!-- Tab 1: Orders -->
+    <div class="tab-content active" id="tab-orders">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 20px;" data-i18n="admin_orders_title">Останні замовлення та кошики</h3>
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th data-i18n="admin_th_order_id">ID Замовлення</th>
+            <th data-i18n="admin_th_date">Дата</th>
+            <th data-i18n="admin_th_customer">Клієнт</th>
+            <th data-i18n="admin_th_items">Товари</th>
+            <th data-i18n="admin_th_total">Сума</th>
+            <th data-i18n="admin_th_status">Статус</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTbody">
+          <tr><td colspan="6" style="text-align:center;" data-i18n="admin_loading">Завантаження замовлень...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab 2: Subscribers -->
+    <div class="tab-content" id="tab-subscribers">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 20px;" data-i18n="admin_subs_title">Підписники AirL Expedition Club</h3>
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th data-i18n="admin_th_email">Email</th>
+            <th data-i18n="admin_th_sub_date">Дата підписки</th>
+            <th data-i18n="admin_th_source">Джерело</th>
+            <th data-i18n="admin_th_status">Статус</th>
+          </tr>
+        </thead>
+        <tbody id="subsTbody">
+          <tr><td colspan="4" style="text-align:center;" data-i18n="admin_loading">Завантаження підписників...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab 3: Tickets -->
+    <div class="tab-content" id="tab-tickets">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 20px;" data-i18n="admin_tickets_title">Запити до служби підтримки</h3>
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th data-i18n="admin_th_ticket_id">ID Тікета</th>
+            <th data-i18n="admin_th_date">Дата</th>
+            <th data-i18n="admin_th_name_email">Ім'я / Email</th>
+            <th data-i18n="admin_th_category">Категорія</th>
+            <th data-i18n="admin_th_priority">Пріоритет</th>
+            <th data-i18n="admin_th_status">Статус</th>
+          </tr>
+        </thead>
+        <tbody id="ticketsTbody">
+          <tr><td colspan="6" style="text-align:center;" data-i18n="admin_loading">Завантаження тікетів...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab 4: Products -->
+    <div class="tab-content" id="tab-products">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 20px;" data-i18n="admin_products_title">Залишки товарів та моделі дронів</h3>
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th data-i18n="admin_th_prod_id">ID</th>
+            <th data-i18n="admin_th_prod_name">Назва моделі</th>
+            <th data-i18n="admin_th_prod_cat">Категорія</th>
+            <th data-i18n="admin_th_prod_price">Ціна</th>
+            <th data-i18n="admin_th_prod_stock">Залишок на складі</th>
+          </tr>
+        </thead>
+        <tbody id="productsTbody">
+          <tr><td colspan="5" style="text-align:center;" data-i18n="admin_loading">Завантаження каталогу...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab 5: Raw JSON View -->
+    <div class="tab-content" id="tab-raw">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 12px;" data-i18n="admin_raw_title">Живий знімок бази даних (Live State)</h3>
+      <pre class="code-json" id="rawJsonViewer" data-i18n="admin_loading">Завантаження...</pre>
+    </div>
+
+    <!-- Tab 6: Help & Instructions -->
+    <div class="tab-content" id="tab-help">
+      <h3 class="font-display" style="color:#fff; margin-bottom: 16px;" data-i18n="admin_help_title">Як влаштована та як запускається база даних AirL</h3>
+      
+      <div style="line-height:1.7; color:var(--c-text-secondary);">
+        <p style="margin-bottom:16px;" data-i18n="admin_help_desc">
+          База даних сайту побудована за архітектурою <strong>Embedded JSON Document Database</strong>. Вона не вимагає встановлення сторонніх громіздких СУБД (PostgreSQL / MySQL / MongoDB) та працює автоматично при старті бекенду.
+        </p>
+
+        <h4 style="color:var(--c-neon-lime); margin:20px 0 8px;" data-i18n="admin_help_sec1_title">1. Як запустити базу даних:</h4>
+        <p data-i18n="admin_help_sec1_desc">
+          База даних запускається разом із бекенд-сервером:
+        </p>
+        <ul style="margin-left:20px; margin-bottom:16px;">
+          <li data-i18n="admin_help_li1"><strong>Спосіб 1 (Швидкий запуск):</strong> Двічі клацніть файл <code>start-server.bat</code> у корені проєкту. Сервер та база даних активуються на порту 3000.</li>
+          <li data-i18n="admin_help_li2"><strong>Спосіб 2 (Через термінал):</strong> Виконайте команду <code>agy-node server.js</code> (або <code>node server.js</code>).</li>
+          <li data-i18n="admin_help_li3"><strong>Спосіб 3 (Native PowerShell):</strong> Запустіть <code>powershell -File server.ps1</code>.</li>
+        </ul>
+
+        <h4 style="color:var(--c-neon-lime); margin:20px 0 8px;" data-i18n="admin_help_sec2_title">2. Де зберігаються дані:</h4>
+        <p data-i18n="admin_help_sec2_desc">Усі таблиці зберігаються у папці <code>data/</code>:</p>
+        <ul style="margin-left:20px; margin-bottom:16px;">
+          <li data-i18n="admin_help_li_orders"><code>data/orders.json</code> — усі оформлені замовлення, кошики, обрані кольори та суми.</li>
+          <li data-i18n="admin_help_li_subs"><code>data/subscribers.json</code> — база email-адрес підписників клубу.</li>
+          <li data-i18n="admin_help_li_tickets"><code>data/tickets.json</code> — звернення до служби підтримки та консьєрж-сервісу.</li>
+          <li data-i18n="admin_help_li_prods"><code>data/products.json</code> — каталог моделей дронів, ціни та кількість на складі.</li>
+        </ul>
+
+        <h4 style="color:var(--c-neon-lime); margin:20px 0 8px;" data-i18n="admin_help_sec3_title">3. Як редагувати або створити резервну копію:</h4>
+        <p data-i18n="admin_help_sec3_desc">
+          Ви можете в будь-який момент відкрити будь-який файл із папки <code>data/</code> у Блокноті або VS Code, відредагувати ціну чи кількість, або просто скопіювати папку <code>data/</code> на флешку для бекапу.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const adminTranslationsFallback = {
+      en: {
+        admin_back_to_site: "← Back to AirL Site",
+        nav_drones: "Drones",
+        nav_accessories: "Accessories",
+        nav_stories: "Stories",
+        nav_support: "Support",
+        admin_title: "AirL Database & Backend Control",
+        admin_subtitle: "Database storage path: <code>папка антигравіті/data/</code> (.json document store)",
+        admin_reload_btn: "Refresh Data",
+        admin_db_online: "DATABASE ONLINE",
+        admin_db_offline: "DATABASE OFFLINE",
+        admin_stat_orders: "Total Orders",
+        admin_stat_revenue: "Total Revenue",
+        admin_stat_subscribers: "Club Subscribers",
+        admin_stat_tickets: "Support Tickets",
+        admin_tab_orders: "📦 Orders (orders.json)",
+        admin_tab_subscribers: "👥 Subscribers (subscribers.json)",
+        admin_tab_tickets: "🎫 Support Tickets (tickets.json)",
+        admin_tab_products: "🏷️ Inventory & Fleet (products.json)",
+        admin_tab_raw: "💾 Raw JSON View",
+        admin_tab_help: "❓ Setup Guide & Docs",
+        admin_orders_title: "Recent Orders & Cart Checkouts",
+        admin_th_order_id: "Order ID",
+        admin_th_date: "Date",
+        admin_th_customer: "Customer",
+        admin_th_items: "Items",
+        admin_th_total: "Total",
+        admin_th_status: "Status",
+        admin_no_orders: "No orders placed yet",
+        admin_subs_title: "AirL Expedition Club Subscribers",
+        admin_th_email: "Email",
+        admin_th_sub_date: "Subscription Date",
+        admin_th_source: "Source",
+        admin_no_subs: "No subscribers registered yet",
+        admin_tickets_title: "Support & Concierge Requests",
+        admin_th_ticket_id: "Ticket ID",
+        admin_th_name_email: "Name / Email",
+        admin_th_category: "Category",
+        admin_th_priority: "Priority",
+        admin_no_tickets: "No tickets submitted yet",
+        admin_products_title: "Inventory Stock & Drone Fleet",
+        admin_th_prod_id: "ID",
+        admin_th_prod_name: "Model Name",
+        admin_th_prod_cat: "Category",
+        admin_th_prod_price: "Price",
+        admin_th_prod_stock: "Stock in Warehouse",
+        admin_units_pcs: "units",
+        admin_raw_title: "Live Database State (JSON)",
+        admin_loading: "Loading...",
+        admin_help_title: "How AirL Database Works & Setup Guide",
+        admin_help_desc: "The website database is built on the <strong>Embedded JSON Document Database</strong> architecture. It requires no heavy external DBMS installations (PostgreSQL / MySQL / MongoDB) and runs automatically when the backend starts.",
+        admin_help_sec1_title: "1. How to Start the Database:",
+        admin_help_sec1_desc: "The database starts automatically alongside the backend server:",
+        admin_help_li1: "<strong>Method 1 (Quick Start):</strong> Double-click the <code>start-server.bat</code> file in the project root. The server and DB will launch on port 3000.",
+        admin_help_li2: "<strong>Method 2 (Terminal):</strong> Run <code>agy-node server.js</code> (or <code>node server.js</code>).",
+        admin_help_li3: "<strong>Method 3 (Native PowerShell):</strong> Run <code>powershell -File server.ps1</code>.",
+        admin_help_sec2_title: "2. Where the Data is Stored:",
+        admin_help_sec2_desc: "All database documents are stored in the <code>data/</code> directory:",
+        admin_help_li_orders: "<code>data/orders.json</code> — all submitted orders, cart items, selected colors, and totals.",
+        admin_help_li_subs: "<code>data/subscribers.json</code> — database of subscribed club creator emails.",
+        admin_help_li_tickets: "<code>data/tickets.json</code> — customer support tickets and concierge requests.",
+        admin_help_li_prods: "<code>data/products.json</code> — drone fleet catalog, pricing, and live inventory count.",
+        admin_help_sec3_title: "3. Editing & Backups:",
+        admin_help_sec3_desc: "You can open any file from the <code>data/</code> folder in Notepad or VS Code at any time to adjust prices or stock, or copy the <code>data/</code> folder to make an instant offline backup."
+      },
+      ua: {
+        admin_back_to_site: "← На сайт AirL",
+        nav_drones: "Дрони",
+        nav_accessories: "Аксесуари",
+        nav_stories: "Історії",
+        nav_support: "Підтримка",
+        admin_title: "Керування базою даних AirL",
+        admin_subtitle: "Розташування файлів бази даних: <code>папка антигравіті/data/</code> (.json сховище документів)",
+        admin_reload_btn: "Оновити дані",
+        admin_db_online: "БАЗА ДАНИХ ОНЛАЙН",
+        admin_db_offline: "БАЗА ДАНИХ ОФЛАЙН",
+        admin_stat_orders: "Всього замовлень (Orders)",
+        admin_stat_revenue: "Сума продажів (Revenue)",
+        admin_stat_subscribers: "Підписників клубу (Subscribers)",
+        admin_stat_tickets: "Запитів у підтримку (Tickets)",
+        admin_tab_orders: "📦 Замовлення (orders.json)",
+        admin_tab_subscribers: "👥 Підписники (subscribers.json)",
+        admin_tab_tickets: "🎫 Консьєрж-тікети (tickets.json)",
+        admin_tab_products: "🏷️ Склад товарів (products.json)",
+        admin_tab_raw: "💾 Прямий перегляд JSON",
+        admin_tab_help: "❓ Інструкція: Як запустити БД",
+        admin_orders_title: "Останні замовлення та кошики",
+        admin_th_order_id: "ID Замовлення",
+        admin_th_date: "Дата",
+        admin_th_customer: "Клієнт",
+        admin_th_items: "Товари",
+        admin_th_total: "Сума",
+        admin_th_status: "Статус",
+        admin_no_orders: "Немає замовлень",
+        admin_subs_title: "Підписники AirL Expedition Club",
+        admin_th_email: "Email",
+        admin_th_sub_date: "Дата підписки",
+        admin_th_source: "Джерело",
+        admin_no_subs: "Немає підписників",
+        admin_tickets_title: "Запити до служби підтримки",
+        admin_th_ticket_id: "ID Тікета",
+        admin_th_name_email: "Ім'я / Email",
+        admin_th_category: "Категорія",
+        admin_th_priority: "Пріоритет",
+        admin_no_tickets: "Немає тікетів",
+        admin_products_title: "Залишки товарів та моделі дронів",
+        admin_th_prod_id: "ID",
+        admin_th_prod_name: "Назва моделі",
+        admin_th_prod_cat: "Категорія",
+        admin_th_prod_price: "Ціна",
+        admin_th_prod_stock: "Залишок на складі",
+        admin_units_pcs: "шт",
+        admin_raw_title: "Живий знімок бази даних (Live State)",
+        admin_loading: "Завантаження...",
+        admin_help_title: "Як влаштована та як запускається база даних AirL",
+        admin_help_desc: "База даних сайту побудована за архітектурою <strong>Embedded JSON Document Database</strong>. Вона не вимагає встановлення сторонніх громіздких СУБД (PostgreSQL / MySQL / MongoDB) та працює автоматично при старті бекенду.",
+        admin_help_sec1_title: "1. Як запустити базу даних:",
+        admin_help_sec1_desc: "База даних запускається разом із бекенд-сервером:",
+        admin_help_li1: "<strong>Спосіб 1 (Швидкий запуск):</strong> Двічі клацніть файл <code>start-server.bat</code> у корені проєкту. Сервер та база даних активуються на порту 3000.",
+        admin_help_li2: "<strong>Спосіб 2 (Через термінал):</strong> Виконайте команду <code>agy-node server.js</code> (або <code>node server.js</code>).",
+        admin_help_li3: "<strong>Спосіб 3 (Native PowerShell):</strong> Запустіть <code>powershell -File server.ps1</code>.",
+        admin_help_sec2_title: "2. Де зберігаються дані:",
+        admin_help_sec2_desc: "Усі таблиці зберігаються у папці <code>data/</code>:",
+        admin_help_li_orders: "<code>data/orders.json</code> — усі оформлені замовлення, кошики, обрані кольори та суми.",
+        admin_help_li_subs: "<code>data/subscribers.json</code> — база email-адрес підписників клубу.",
+        admin_help_li_tickets: "<code>data/tickets.json</code> — звернення до служби підтримки та консьєрж-сервісу.",
+        admin_help_li_prods: "<code>data/products.json</code> — каталог моделей дронів, ціни та кількість на складі.",
+        admin_help_sec3_title: "3. Як редагувати або створити резервну копію:",
+        admin_help_sec3_desc: "Ви можете в будь-який момент відкрити будь-який файл із папки <code>data/</code> у Блокноті або VS Code, відредагувати ціну чи кількість, або просто скопіювати папку <code>data/</code> на флешку для бекапу."
+      }
+    };
+
+    let currentLang = localStorage.getItem('airl_lang') || 'ua';
+    let cachedData = null;
+
+    function getDict(lang) {
+      const fromWindow = (window.translations && window.translations[lang]) || {};
+      const fallback = adminTranslationsFallback[lang] || {};
+      return Object.assign({}, fallback, fromWindow);
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('airl_lang', lang);
+      document.documentElement.lang = lang;
+
+      const dict = getDict(lang);
+
+      // Update static data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          if (dict[key].includes('<')) {
+            el.innerHTML = dict[key];
+          } else {
+            el.textContent = dict[key];
+          }
+        }
+      });
+
+      // Update lang switcher active buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      // Re-render table data with new language
+      if (cachedData) {
+        renderDbView(cachedData);
+      }
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.admin-tab-btn').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.admin-tab-btn')).find(b => {
+        const attr = b.getAttribute('onclick');
+        return attr && attr.includes(tabId);
+      });
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function renderDbView(data) {
+      const dict = getDict(currentLang);
+
+      // 1. Stats
+      const orders = data.orders || [];
+      const subs = data.subscribers || [];
+      const tickets = data.tickets || [];
+      const products = data.products || [];
+
+      document.getElementById('statOrders').textContent = orders.length;
+      document.getElementById('statSubs').textContent = subs.length;
+      document.getElementById('statTickets').textContent = tickets.length;
+
+      const totalRev = orders.reduce((sum, o) => sum + (o.total || o.amount || 0), 0);
+      document.getElementById('statRevenue').textContent = '$' + totalRev.toLocaleString();
+
+      // 2. Orders Table
+      const ordersTbody = document.getElementById('ordersTbody');
+      if (orders.length === 0) {
+        ordersTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">${dict.admin_no_orders || 'No orders'}</td></tr>`;
+      } else {
+        ordersTbody.innerHTML = orders.map(o => `
+          <tr>
+            <td><strong>${o.orderId || 'ORD-00'}</strong></td>
+            <td>${new Date(o.date).toLocaleDateString(currentLang === 'ua' ? 'uk-UA' : 'en-US')}</td>
+            <td>${(o.customer && (o.customer.fullName || o.customer.name)) || (currentLang === 'ua' ? 'Клієнт' : 'Customer')} (${(o.customer && o.customer.email) || ''})</td>
+            <td>${(o.items && o.items.map(i => i.name).join(', ')) || o.kit || 'AirL Kit'}</td>
+            <td style="color:var(--c-neon-lime); font-weight:700;">$${(o.total || o.amount || 0).toLocaleString()}</td>
+            <td><span class="db-badge db-badge-green">${o.status || 'Active'}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // 3. Subscribers Table
+      const subsTbody = document.getElementById('subsTbody');
+      if (subs.length === 0) {
+        subsTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">${dict.admin_no_subs || 'No subscribers'}</td></tr>`;
+      } else {
+        subsTbody.innerHTML = subs.map(s => `
+          <tr>
+            <td><strong>${s.email}</strong></td>
+            <td>${new Date(s.date).toLocaleDateString(currentLang === 'ua' ? 'uk-UA' : 'en-US')}</td>
+            <td>${s.source || 'footer'}</td>
+            <td><span class="db-badge db-badge-blue">Active</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // 4. Tickets Table
+      const ticketsTbody = document.getElementById('ticketsTbody');
+      if (tickets.length === 0) {
+        ticketsTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">${dict.admin_no_tickets || 'No tickets'}</td></tr>`;
+      } else {
+        ticketsTbody.innerHTML = tickets.map(t => `
+          <tr>
+            <td><strong>${t.ticketId || 'TCK-00'}</strong></td>
+            <td>${new Date(t.date).toLocaleDateString(currentLang === 'ua' ? 'uk-UA' : 'en-US')}</td>
+            <td>${t.name || 'Traveler'} (${t.email})</td>
+            <td>${t.category || 'General'}</td>
+            <td><span class="db-badge db-badge-green">${t.priority || 'High'}</span></td>
+            <td><span class="db-badge db-badge-blue">${t.status || 'Open'}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // 5. Products Table
+      const productsTbody = document.getElementById('productsTbody');
+      const unitsLabel = dict.admin_units_pcs || 'units';
+      productsTbody.innerHTML = products.map(p => `
+        <tr>
+          <td><code>${p.id}</code></td>
+          <td><strong>${p.name}</strong></td>
+          <td>${p.category}</td>
+          <td style="color:var(--c-neon-lime); font-weight:700;">$${p.price}</td>
+          <td><span class="db-badge db-badge-green">${p.stock} ${unitsLabel}</span></td>
+        </tr>
+      `).join('');
+
+      // 6. Raw JSON Viewer
+      document.getElementById('rawJsonViewer').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function loadDbData() {
+      const dict = getDict(currentLang);
+      try {
+        const res = await fetch('/api/admin/all');
+        if (!res.ok) throw new Error('Backend not running');
+        const data = await res.json();
+        cachedData = data;
+        renderDbView(data);
+      } catch (err) {
+        console.warn('Cannot reach backend:', err);
+        const badge = document.querySelector('.db-status-badge');
+        if (badge) {
+          badge.innerHTML = `<span style="color:#ff6666;">&#9679;</span> <span>${dict.admin_db_offline || 'DATABASE OFFLINE'}</span>`;
+        }
+      }
+    }
+
+    // Attach Language Switcher Events
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        applyLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+
+    // Cross-tab Synchronization
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'airl_lang' && e.newValue && e.newValue !== currentLang) {
+        applyLanguage(e.newValue);
+      }
+    });
+
+    // Add Cursor Glow
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+
+    window.addEventListener('pointermove', (e) => {
+      glow.style.opacity = '1';
+      glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+    });
+
+    function initAdmin() {
+      applyLanguage(currentLang);
+      loadDbData();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAdmin);
+    } else {
+      initAdmin();
+    }
+  </script>
+</body>
+</html>

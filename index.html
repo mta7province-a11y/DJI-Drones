@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title_home">AirL — 8K Cinema Drone for Travelers</title>
+  <link rel="stylesheet" href="css/style.css?v=3.3">
+  <link rel="stylesheet" href="css/responsive.css?v=3.3">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SITE HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle-btn" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+          <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+          <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+        </ul>
+      </div>
+
+      <!-- Center Logo -->
+      <a href="index.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </a>
+
+      <!-- Header Right: Language, Currency, Cart, CTA -->
+      <div class="header-right">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <span class="lang-globe-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </span>
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <span class="lang-divider"></span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <button class="cart-btn" aria-label="View Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </button>
+
+        <button class="btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <aside class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:24px; height:24px;">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </div>
+      <button class="mobile-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="drones.html" data-i18n="nav_drones">Дрони <span>&rarr;</span></a></li>
+      <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари <span>&rarr;</span></a></li>
+      <li><a href="stories.html" data-i18n="nav_stories">Історії <span>&rarr;</span></a></li>
+      <li><a href="support.html" data-i18n="nav_support">Підтримка <span>&rarr;</span></a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <div class="lang-switch" role="group" aria-label="Language selector" style="width:fit-content;">
+        <span class="lang-globe-icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+        <button class="lang-btn active" data-lang="ua">UA</button>
+        <span class="lang-divider"></span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="btn-checkout btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       HERO SECTION (AirL—7 Cinema Platform)
+       ========================================================================== -->
+  <section class="hero-section">
+    <div class="container">
+      <!-- Center Floating Drone Stage -->
+      <div class="hero-visual-stage">
+        <img src="assets/images/hero-drone.jpg" alt="AirL-7 Cinema Drone" class="hero-drone-image">
+
+        <!-- Top-Right Flight Time Badge -->
+        <div class="hero-badge-flight">
+          <div>
+            <span class="flight-num">46 <span data-i18n="hero_badge_min">ХВ</span></span>
+            <div class="flight-label" data-i18n="hero_badge_flight">Час польоту</div>
+          </div>
+          <svg class="battery-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="16" height="10" rx="2"/>
+            <line x1="20" y1="11" x2="20" y2="13"/>
+            <rect x="5" y="10" width="10" height="4" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <!-- Left Floating ND Filter Card -->
+        <div class="hero-left-card" onclick="window.location.href='accessories.html'">
+          <img src="assets/images/nd-filters.jpg" alt="ND Filter Kit">
+          <div class="hero-left-card-header">
+            <span data-i18n="hero_nd_kit">КОМПЛЕКТ ND-ФІЛЬТРІВ</span>
+            <span class="tag-neon-pill" data-i18n="hero_tag_new">Новинка</span>
+          </div>
+          <a href="accessories.html" data-i18n="hero_learn_more">Дізнатися більше</a>
+        </div>
+
+        <!-- Magnetic Round Button -->
+        <div class="hero-magnetic-btn">
+          <span class="order-text" data-i18n="hero_order_btn">ЗАМОВИТИ</span>
+          <span class="order-price">$1,299</span>
+        </div>
+
+        <!-- Right Side Cinema Drone Specs -->
+        <div class="hero-right-meta">
+          <div class="badge-tag">
+            <span class="dot"></span>
+            <span>AIRL CINEMA</span>
+          </div>
+          <h2 class="hero-cinema-title" data-i18n="hero_cinema_drone">Кінематографічний дрон</h2>
+          <p class="hero-cinema-sub" data-i18n="hero_from_price">Від $1,299 · Доставка: Жовтень 2026</p>
+        </div>
+      </div>
+
+      <!-- Bottom Cockpit / HUD Deck -->
+      <div class="hero-cockpit">
+        <!-- Left: Sub-250 Class Card -->
+        <div class="cockpit-card">
+          <div class="badge-tag">
+            <span class="dot"></span>
+            <span data-i18n="hero_badge_light">Ультралегкий</span>
+          </div>
+          <div class="cockpit-bracket-box">
+            <div class="cockpit-huge-num">249</div>
+            <div class="cockpit-unit" data-i18n="hero_grams">грамів</div>
+          </div>
+          <div class="cockpit-sub-label" data-i18n="hero_sub250">КЛАС ДО 250Г</div>
+        </div>
+
+        <!-- Center: Bezel Arc -->
+        <div class="cockpit-center-arch">
+          <div class="cockpit-center-tag">
+            ✦ <span data-i18n="hero_about_tag">ПРО AIRL—7</span> ✦
+          </div>
+          <p class="cockpit-headline" data-i18n="hero_about_title">
+            Найлегша 8K кінематографічна платформа, створена для дикої природи
+          </p>
+        </div>
+
+        <!-- Right: Transmission Circular Gauge -->
+        <div class="cockpit-card transmission-gauge-card">
+          <div class="badge-tag">
+            <span class="dot"></span>
+            <span data-i18n="hero_trans_title">Зв'язок</span>
+          </div>
+          <div class="gauge-circle-wrap">
+            <svg class="gauge-svg" viewBox="0 0 100 100">
+              <circle class="gauge-track" cx="50" cy="50" r="42"/>
+              <circle class="gauge-progress" cx="50" cy="50" r="42"/>
+            </svg>
+            <div class="gauge-center-content">
+              <span class="gauge-arrow">&uarr;</span>
+              <span class="gauge-val">15</span>
+              <span class="gauge-unit">KM</span>
+            </div>
+          </div>
+          <div class="transmission-meta" data-i18n="hero_trans_feed">4K / 60 ПРЯМИЙ ПОТІК</div>
+          <div class="certified-tag">
+            <span data-i18n="hero_certified">Сертифіковано</span>
+            <strong class="airsafe-logo">AIRSAFE</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 02: ANATOMY
+       ========================================================================== -->
+  <section class="anatomy-section" id="anatomy">
+    <div class="container">
+      <div class="anatomy-header">
+        <div class="badge-tag">
+          <span class="dot"></span>
+          <span data-i18n="anatomy_num">02 — АНАТОМІЯ</span>
+        </div>
+        <h2 class="anatomy-title" data-i18n="anatomy_title">Кожен грам спроєктовано досконало.</h2>
+        <p class="anatomy-sub" data-i18n="anatomy_sub">
+          Складається до розміру пляшки для води. Розкладається у повноцінний кінознімальний сетап.
+        </p>
+      </div>
+
+      <!-- Anatomy Interactive Stage -->
+      <div class="anatomy-stage">
+        <div class="anatomy-img-wrap">
+          <img src="assets/images/drone-anatomy.jpg" alt="AirL-7 Anatomy" class="anatomy-img">
+
+          <!-- Hotspot Pins -->
+          <div class="hotspot-pin active" style="top: 22%; right: 28%;" data-target="spot-led" title="Lime-Beacon LEDs"></div>
+          <div class="hotspot-pin" style="bottom: 24%; right: 28%;" data-target="spot-ant" title="Tri-band O4+ Antennas"></div>
+          <div class="hotspot-pin" style="top: 24%; left: 28%;" data-target="spot-sensors" title="LiDAR Obstacle Sensors"></div>
+          <div class="hotspot-pin" style="top: 14%; left: 48%;" data-target="spot-gimbal" title="3-Axis Mechanical Gimbal"></div>
+        </div>
+
+        <!-- Callout Cards -->
+        <div class="anatomy-callout callout-top-right active" id="spot-led">
+          <h4 class="callout-title" data-i18n="spot_led_title">Лаймові маяки Lime-Beacon</h4>
+          <p class="callout-desc" data-i18n="spot_led_desc">Видимі на відстані до 1.2 км у нічний час для гірських польотів.</p>
+        </div>
+
+        <div class="anatomy-callout callout-bottom-right" id="spot-ant">
+          <h4 class="callout-title" data-i18n="spot_ant_title">Трьохдіапазонні антени O4+</h4>
+          <p class="callout-desc" data-i18n="spot_ant_desc">Дальність до 15 км із кришталевим відеопотоком 1080p/60.</p>
+        </div>
+
+        <div class="anatomy-callout callout-top-left" id="spot-sensors">
+          <h4 class="callout-title" data-i18n="spot_sensors_title">360° LiDAR-сенсори</h4>
+          <p class="callout-desc" data-i18n="spot_sensors_desc">Виявлення перешкод у реальному часі навіть крізь гілки лісу.</p>
+        </div>
+
+        <div class="anatomy-callout callout-bottom-left" id="spot-gimbal">
+          <h4 class="callout-title" data-i18n="spot_gimbal_title">3-осьовий механічний підвіс</h4>
+          <p class="callout-desc" data-i18n="spot_gimbal_desc">Бездоганна стабілізація при поривах вітру до 15 м/с.</p>
+        </div>
+      </div>
+
+      <!-- Bottom Specs Bar -->
+      <div class="anatomy-specs-bar">
+        <div class="metric-item">
+          <div class="metric-value-wrap">
+            <span class="metric-val" data-i18n="spec_folded_num">18</span>
+            <span class="metric-unit" data-i18n="spec_folded_unit">см</span>
+          </div>
+          <div class="metric-label" data-i18n="spec_folded_lbl">Довжина у складеному вигляді</div>
+        </div>
+
+        <div class="metric-item">
+          <div class="metric-value-wrap">
+            <span class="metric-val" data-i18n="spec_temp_num">-10/40</span>
+            <span class="metric-unit" data-i18n="spec_temp_unit">°C</span>
+          </div>
+          <div class="metric-label" data-i18n="spec_temp_lbl">Робоча температура</div>
+        </div>
+
+        <div class="metric-item">
+          <div class="metric-value-wrap">
+            <span class="metric-val" data-i18n="spec_ip_num">IP54</span>
+          </div>
+          <div class="metric-label" data-i18n="spec_ip_lbl">Захист від пилу, снігу та бризок</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 03: BENTO INNOVATION MATRIX
+       ========================================================================== -->
+  <section class="bento-section">
+    <div class="container">
+      <div class="bento-grid">
+        <!-- 1. Camera Sensor Card (Span 7) -->
+        <div class="bento-card bento-camera">
+          <img src="assets/images/camera-sensor.jpg" alt="1 inch 50MP Camera Sensor" class="bento-card-bg">
+          <div class="bento-gradient-overlay"></div>
+          <div class="bento-card-content">
+            <span class="bento-tag" data-i18n="bento_tag_cam">КАМЕРА</span>
+            <h3 class="bento-title" data-i18n="bento_cam_title">1" 50MP кінематографічний сенсор</h3>
+            <p class="bento-desc" data-i18n="bento_cam_desc">
+              8K/60 HDR · 14 стопів динамічного діапазону · 10-bit D-Log колірний профіль для пост-продакшну.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. Safety LiDAR Card (Span 5) -->
+        <div class="bento-card bento-safety">
+          <img src="assets/images/forest-obstacle.jpg" alt="360 Obstacle Sensing" class="bento-card-bg">
+          <div class="bento-gradient-overlay"></div>
+          <div class="bento-card-content">
+            <span class="bento-tag" data-i18n="bento_tag_safety">БЕЗПЕКА</span>
+            <h3 class="bento-title" data-i18n="bento_safety_title">360° всеспрямоване розпізнавання</h3>
+            <p class="bento-desc" data-i18n="bento_safety_desc">
+              Вісім оптичних сенсорів та LiDAR картують гірський ліс на швидкості 60 кадрів/с вдень і вночі.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. Battery Power Card (Span 4) -->
+        <div class="bento-card bento-battery">
+          <img src="assets/images/smart-battery.jpg" alt="46-Minute Flight Battery" class="bento-card-bg">
+          <div class="bento-gradient-overlay"></div>
+          <div class="bento-card-content">
+            <span class="bento-tag" data-i18n="bento_tag_power">ЖИВЛЕННЯ</span>
+            <h3 class="bento-title" data-i18n="bento_power_title">46 хвилин автономного польоту</h3>
+            <p class="bento-desc" data-i18n="bento_power_desc">
+              Розумний акумулятор із гарячою заміною та надшвидкою зарядкою 100W PD.
+            </p>
+          </div>
+        </div>
+
+        <!-- 4. Smart Controller Card (Span 4) -->
+        <div class="bento-card bento-controller">
+          <img src="assets/images/smart-controller.jpg" alt="2000-nit Controller" class="bento-card-bg">
+          <div class="bento-gradient-overlay"></div>
+          <div class="bento-card-content">
+            <span class="bento-tag" data-i18n="bento_tag_control">КЕРУВАННЯ</span>
+            <h3 class="bento-title" data-i18n="bento_control_title">Смарт-пульт із яскравістю 2000 ніт</h3>
+            <p class="bento-desc" data-i18n="bento_control_desc">
+              7-дюймовий екран надвисокої яскравості для зйомки під сліпучим гірським сонцем.
+            </p>
+          </div>
+        </div>
+
+        <!-- 5. Neon Lime Transmission Card (Span 4) -->
+        <div class="bento-card bento-trans-neon">
+          <div>
+            <span class="bento-tag" data-i18n="bento_tag_trans">ПЕРЕДАЧА СИГНАЛУ</span>
+            <div class="trans-arrow-btn">&nearr;</div>
+          </div>
+          <div>
+            <div class="bento-big-stat" data-i18n="bento_trans_stat">15 km</div>
+            <p class="bento-desc" data-i18n="bento_trans_desc">
+              Відеолінк нового покоління O4+ без затримок та перешкод у диких ущелинах.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 04: SHOP / CHOOSE YOUR KIT
+       ========================================================================== -->
+  <section class="shop-section" id="shop">
+    <div class="container">
+      <div class="shop-header">
+        <div class="badge-tag">
+          <span class="dot"></span>
+          <span data-i18n="shop_num">04 — МАГАЗИН</span>
+        </div>
+        <h2 class="shop-title" data-i18n="shop_title">Оберіть свій комплект.</h2>
+        <p data-i18n="shop_sub">
+          Безкоштовна експрес-доставка мандрівникам, 30-денний тест-політ та 0% розстрочка на кожен комплект.
+        </p>
+
+        <!-- Payment Toggle Tabs -->
+        <div class="shop-tabs-wrap">
+          <button class="shop-tab-btn active" id="tabOutright" data-i18n="shop_tab_outright">Повна оплата</button>
+          <button class="shop-tab-btn" id="tabMonthly" data-i18n="shop_tab_monthly">Щомісяця — 0% річних</button>
+        </div>
+      </div>
+
+      <!-- Bundle Cards -->
+      <div class="bundle-grid">
+        <!-- Kit 1: Standard -->
+        <div class="bundle-card">
+          <div class="bundle-img-box">
+            <img src="assets/images/hero-drone.jpg" alt="AirL-7 Standard">
+          </div>
+          <h3 class="bundle-name" data-i18n="kit1_name">AirL—7 Standard</h3>
+          <p class="bundle-desc" data-i18n="kit1_desc">Для легких мандрівок з рюкзаком та соло-зйомки.</p>
+          <div class="bundle-price-wrap">
+            <span class="bundle-price" id="price-standard">$1,099</span>
+          </div>
+          <ul class="bundle-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_drone_included">Дрон AirL—7 у комплекті</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_battery_single">1x Smart-акумулятор (46 хв)</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_standard_rc">Стандартний контролер</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_propellers_spare">Запасні пропелери та кабелі</span>
+            </li>
+          </ul>
+          <div class="finish-picker">
+            <span class="finish-label" data-i18n="finish_label">Колір:</span>
+            <div class="finish-dots">
+              <span class="finish-dot finish-graphite active" title="Graphite"></span>
+              <span class="finish-dot finish-glacier" title="Glacier"></span>
+            </div>
+          </div>
+          <button class="btn-bundle-order" data-buy-kit="standard" data-i18n="btn_add_bundle">Обрати комплект</button>
+        </div>
+
+        <!-- Kit 2: Fly More (Most Popular) -->
+        <div class="bundle-card popular">
+          <span class="bundle-badge" data-i18n="kit_badge_popular">НАЙПОПУЛЯРНІШИЙ</span>
+          <div class="bundle-img-box">
+            <img src="assets/images/flymore-kit.jpg" alt="AirL-7 Fly More Combo">
+          </div>
+          <h3 class="bundle-name" data-i18n="kit2_name">AirL—7 Fly More</h3>
+          <p class="bundle-desc" data-i18n="kit2_desc">Три акумулятори. Жодних простоїв під час експедицій.</p>
+          <div class="bundle-price-wrap">
+            <span class="bundle-price" id="price-flymore">$1,649</span>
+            <span class="bundle-old-price">$1,847</span>
+            <span class="bundle-save-tag" data-i18n="save_tag">Економія $198</span>
+          </div>
+          <ul class="bundle-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_drone_included">Дрон AirL—7 у комплекті</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_batteries_three">3x Акумулятори + 100W зарядна станція</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_nd_filters_included">Набір ND-фільтрів (ND8/16/32/64)</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_shoulder_bag">Вологостійка тактична сумка через плече</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_flight_time_total">138 хвилин сумарного польоту</span>
+            </li>
+          </ul>
+          <div class="finish-picker">
+            <span class="finish-label" data-i18n="finish_label">Колір:</span>
+            <div class="finish-dots">
+              <span class="finish-dot finish-graphite active" title="Graphite"></span>
+              <span class="finish-dot finish-glacier" title="Glacier"></span>
+              <span class="finish-dot finish-cyber" title="Cyber Lime"></span>
+            </div>
+          </div>
+          <button class="btn-bundle-order" data-buy-kit="flymore" data-i18n="btn_add_bundle">Обрати комплект</button>
+        </div>
+
+        <!-- Kit 3: Cine Pro -->
+        <div class="bundle-card">
+          <span class="bundle-badge" style="background:#fff; color:#050b08;" data-i18n="kit_badge_pro">ДЛЯ ПРОФЕСІОНАЛІВ</span>
+          <div class="bundle-img-box">
+            <img src="assets/images/smart-controller.jpg" alt="AirL-7 Cine Pro">
+          </div>
+          <h3 class="bundle-name" data-i18n="kit3_name">AirL—7 Cine Pro</h3>
+          <p class="bundle-desc" data-i18n="kit3_desc">Для знімальних груп та професійних тревел-креаторів.</p>
+          <div class="bundle-price-wrap">
+            <span class="bundle-price" id="price-cinepro">$2,199</span>
+          </div>
+          <ul class="bundle-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_everything_flymore">Усе, що входить у Fly More</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_smart_controller_2000">Смарт-пульт 2000 ніт із дисплеєм</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_internal_storage">512 GB швидкісного SSD + Apple ProRes 422</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="f_care_refresh">2 роки розширеної всесвітньої гарантії Care Refresh</span>
+            </li>
+          </ul>
+          <div class="finish-picker">
+            <span class="finish-label" data-i18n="finish_label">Колір:</span>
+            <div class="finish-dots">
+              <span class="finish-dot finish-graphite active" title="Graphite"></span>
+              <span class="finish-dot finish-glacier" title="Glacier"></span>
+            </div>
+          </div>
+          <button class="btn-bundle-order" data-buy-kit="cinepro" data-i18n="btn_add_bundle">Обрати комплект</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 05: SEEN IN MOTION (Travel Reels)
+       ========================================================================== -->
+  <section class="motion-section">
+    <div class="container">
+      <div class="motion-split">
+        <div class="motion-phone-mockup">
+          <img src="assets/images/mobile-reels.jpg?v=3.4" alt="Mobile Travel Reel">
+        </div>
+
+        <div class="motion-info-col">
+          <div class="badge-tag">
+            <span class="dot"></span>
+            <span data-i18n="motion_badge">AIRL COMMUNITY</span>
+          </div>
+          <h2 class="motion-title" data-i18n="motion_title">Створений бути побаченим у русі.</h2>
+          <p class="motion-sub" data-i18n="motion_sub">
+            Історії, вертикальні рілзи та кадри експедицій — єдина кінематографічна мова для контенту.
+          </p>
+
+          <div class="reels-list">
+            <div class="reel-item-card">
+              <div class="reel-left-meta">
+                <div class="reel-play-icon">&#9658;</div>
+                <div>
+                  <div class="reel-title" data-i18n="motion_reel_1">Доломітові Альпи: сходження на світанку</div>
+                  <div class="reel-loc">Italy · Tre Cime di Lavaredo</div>
+                </div>
+              </div>
+              <span class="tag-neon-pill" data-i18n="motion_watch_reel">Дивитися рілз</span>
+            </div>
+
+            <div class="reel-item-card">
+              <div class="reel-left-meta">
+                <div class="reel-play-icon">&#9658;</div>
+                <div>
+                  <div class="reel-title" data-i18n="motion_reel_2">Водоспади Ісландії: тест у штормовий вітер</div>
+                  <div class="reel-loc">Iceland · Skógafoss Canyon</div>
+                </div>
+              </div>
+              <span class="tag-neon-pill" data-i18n="motion_watch_reel">Дивитися рілз</span>
+            </div>
+
+            <div class="reel-item-card">
+              <div class="reel-left-meta">
+                <div class="reel-play-icon">&#9658;</div>
+                <div>
+                  <div class="reel-title" data-i18n="motion_reel_3">Хребти Карпат: золота година та туман</div>
+                  <div class="reel-loc">Ukraine · Chornohora Ridge</div>
+                </div>
+              </div>
+              <span class="tag-neon-pill" data-i18n="motion_watch_reel">Дивитися рілз</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CART DRAWER
+       ========================================================================== -->
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3 class="font-display" data-i18n="cart_title">Ваш тревел-кошик</h3>
+      <button class="cart-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <div class="cart-items-list">
+      <!-- Items dynamically populated via main.js -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span data-i18n="cart_total">Разом:</span>
+        <span class="cart-total-num">$0</span>
+      </div>
+      <p style="font-size:0.75rem; color:var(--c-glacial-ice); margin-bottom:14px;" data-i18n="cart_shipping_free">
+        Безкоштовна доставка по всьому світу включена
+      </p>
+      <button class="btn-checkout" data-i18n="cart_checkout_btn">Оформити замовлення</button>
+    </div>
+  </div>
+
+  <!-- Reels Video Player Modal -->
+  <div class="modal-overlay" id="reelsModal">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close-btn" id="reelsCloseBtn">&times;</button>
+      <div class="badge-tag" style="margin-bottom: 12px;">
+        <span class="dot"></span>
+        <span data-i18n="modal_seen_motion">AIRL CINEMA REEL · 8K HDR</span>
+      </div>
+      <img src="assets/images/hero-drone.jpg" alt="Reel preview" style="border-radius:12px; margin: 15px 0;">
+      <h3 class="font-display" style="font-size:1.1rem; color:#fff; margin-bottom: 8px;" data-i18n="modal_reel_title">Dolomites Expedition 2026</h3>
+      <p style="font-size:0.85rem; color:var(--c-glacial-ice);" data-i18n="modal_reel_desc">Shot in 8K/60 D-Log with AirL—7 Cinema Drone at -12°C.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="site-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+              <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+              <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+            </svg>
+            <span>AirL</span>
+          </div>
+          <p data-i18n="footer_desc">
+            Інноваційні надлегкі кінематографічні дрони та обладнання для мандрівників, які прагнуть зафіксувати кожну мить світу.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_quick_links">Навігація</h4>
+          <ul class="footer-links">
+            <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+            <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+            <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+            <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_travel_resources">Ресурси для мандрівників</h4>
+          <ul class="footer-links">
+            <li><a href="support.html#regulations" data-i18n="footer_air_rules">Правила польотів у подорожах</a></li>
+            <li><a href="support.html#batteries" data-i18n="footer_battery_guide">Гід із LiPo батарей у літаку</a></li>
+            <li><a href="support.html#warranty" data-i18n="footer_warranty">Глобальна заміна Care</a></li>
+            <li><a href="stories.html#luts" data-i18n="footer_luts">AirL Travel LUTs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_newsletter_title">Приєднуйтесь до клубу мандрівників AirL</h4>
+          <p style="font-size:0.85rem;" data-i18n="footer_newsletter_sub">
+            Отримуйте тревел-гіди, пресети кольору та оновлення прошивок першими.
+          </p>
+          <form class="newsletter-box" onsubmit="event.preventDefault(); showToast(window.translations[document.documentElement.lang || 'ua'].notification_newsletter || 'Thank you for subscribing!');">
+            <input type="email" placeholder="Введіть ваш email..." data-i18n-placeholder="newsletter_placeholder" required>
+            <button type="submit" data-i18n="btn_subscribe">Підписатися</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span data-i18n="footer_rights">© 2026 AirL Aerial Technologies. Усі права захищено. Сертифіковано AIRSAFE.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/translations.js?v=3.2"></script>
+  <script src="js/main.js?v=3.2"></script>
+</body>
+</html>

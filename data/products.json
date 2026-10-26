@@ -1,0 +1,77 @@
+[
+  {
+    "id": "airl-7-standard",
+    "name": "AirL—7 Standard",
+    "category": "drones",
+    "price": 1099,
+    "weight": 249,
+    "flightTime": 46,
+    "stock": 45
+  },
+  {
+    "id": "airl-7-flymore",
+    "name": "AirL—7 Fly More Combo",
+    "category": "drones",
+    "price": 1649,
+    "weight": 249,
+    "flightTime": 138,
+    "stock": 120,
+    "isPopular": true
+  },
+  {
+    "id": "airl-7-cinepro",
+    "name": "AirL—7 Cine Pro",
+    "category": "drones",
+    "price": 2199,
+    "weight": 249,
+    "flightTime": 138,
+    "stock": 28,
+    "isPro": true
+  },
+  {
+    "id": "nano-go",
+    "name": "AirL Nano Go",
+    "category": "drones",
+    "price": 699,
+    "weight": 199,
+    "flightTime": 34,
+    "stock": 60
+  },
+  {
+    "id": "voyager-x",
+    "name": "AirL Voyager X",
+    "category": "drones",
+    "price": 2499,
+    "weight": 790,
+    "flightTime": 52,
+    "stock": 15
+  },
+  {
+    "id": "nd-kit",
+    "name": "AirL Cinema ND Filter Kit",
+    "category": "accessories",
+    "price": 99,
+    "stock": 250
+  },
+  {
+    "id": "battery-100w",
+    "name": "AirL Flight Battery 100W",
+    "category": "accessories",
+    "price": 159,
+    "stock": 180
+  },
+  {
+    "id": "controller-pro",
+    "name": "AirL Horizon 2000-nit RC",
+    "category": "accessories",
+    "price": 599,
+    "stock": 40
+  },
+  {
+    "id": "bag-ip67",
+    "name": "Tactical Expedition Bag IP67",
+    "category": "accessories",
+    "price": 129,
+    "stock": 95
+  }
+]

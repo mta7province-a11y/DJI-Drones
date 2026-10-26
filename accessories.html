@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title_accessories">AirL — Accessories | Оптика, акумулятори та захист для мандрівників</title>
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/responsive.css?v=3.2">
+  <style>
+    .store-hero {
+      padding: 140px 0 40px;
+      text-align: center;
+    }
+    .store-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 16px;
+    }
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .cat-btn {
+      background: rgba(4, 45, 34, 0.4);
+      border: 1px solid var(--c-border-subtle);
+      color: var(--c-text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .cat-btn:hover, .cat-btn.active {
+      background: var(--c-neon-lime);
+      color: var(--c-text-dark);
+      border-color: var(--c-neon-lime);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gutter);
+      margin-top: 50px;
+    }
+    .prod-card {
+      background: var(--c-surface-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+    }
+    .prod-card:hover {
+      border-color: var(--c-border-active);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .prod-img-box {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #020604;
+    }
+    .prod-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .prod-card:hover .prod-img-box img {
+      transform: scale(1.06);
+    }
+    .prod-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .prod-desc {
+      font-size: 0.85rem;
+      color: var(--c-glacial-ice);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .prod-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(201, 220, 234, 0.08);
+      padding-top: 16px;
+    }
+    .prod-price {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: #fff;
+    }
+    @media (max-width: 1024px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 650px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle-btn" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+          <li><a href="accessories.html" class="active" data-i18n="nav_accessories">Аксесуари</a></li>
+          <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+        </ul>
+      </div>
+
+      <a href="index.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </a>
+
+      <div class="header-right">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <span class="lang-globe-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </span>
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <span class="lang-divider"></span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <button class="cart-btn" aria-label="View Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </button>
+
+        <button class="btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:24px; height:24px;">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </div>
+      <button class="mobile-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="drones.html" data-i18n="nav_drones">Дрони <span>&rarr;</span></a></li>
+      <li><a href="accessories.html" class="active" data-i18n="nav_accessories">Аксесуари <span>&rarr;</span></a></li>
+      <li><a href="stories.html" data-i18n="nav_stories">Історії <span>&rarr;</span></a></li>
+      <li><a href="support.html" data-i18n="nav_support">Підтримка <span>&rarr;</span></a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <div class="lang-switch" role="group" aria-label="Language selector" style="width:fit-content;">
+        <span class="lang-globe-icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+        <button class="lang-btn active" data-lang="ua">UA</button>
+        <span class="lang-divider"></span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="btn-checkout btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+    </div>
+  </aside>
+
+  <!-- Store Hero -->
+  <section class="store-hero">
+    <div class="container">
+      <div class="badge-tag">
+        <span class="dot"></span>
+        <span data-i18n="acc_badge">TRAVEL GEAR & OPTICS</span>
+      </div>
+      <h1 data-i18n="page_acc_title">Екіпірування та аксесуари для подорожей</h1>
+      <p data-i18n="page_acc_sub" style="max-width: 680px; margin: 0 auto;">
+        Оптичні фільтри, надшвидкі польові станції зарядки, вологозахищені кейси та аксесуари для будь-якої локації.
+      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills">
+        <button class="cat-btn active" data-i18n="acc_cat_all">Усі</button>
+        <button class="cat-btn" data-i18n="acc_cat_optics">Оптика & Фільтри</button>
+        <button class="cat-btn" data-i18n="acc_cat_power">Живлення & Заряд</button>
+        <button class="cat-btn" data-i18n="acc_cat_cases">Захист & Рюкзаки</button>
+        <button class="cat-btn" data-i18n="acc_cat_control">Пульти & FPV</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid">
+        <!-- 1. ND Filter Kit -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/nd-filters.jpg" alt="ND Filter Kit">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod1_title">AirL Cinema ND Filter Kit</h3>
+          <p class="prod-desc" data-i18n="acc_prod1_desc">Магнітні фільтри ND8, ND16, ND32, ND64 з оптичного скла Schott з водовідштовхувальним покриттям.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$99</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'nd-kit', name:'AirL Cinema ND Filter Kit', price:99, img:'assets/images/nd-filters.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+
+        <!-- 2. Smart Battery -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/smart-battery.jpg" alt="Intelligent Flight Battery">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod2_title">AirL Flight Battery 100W</h3>
+          <p class="prod-desc" data-i18n="acc_prod2_desc">46 хвилин польоту, функція самопідігріву для зими (-10°C) та порт прямої зарядки USB-C PD.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$159</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'battery-100w', name:'AirL Flight Battery 100W', price:159, img:'assets/images/smart-battery.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+
+        <!-- 3. Smart Controller 2000-nit -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/smart-controller.jpg" alt="Smart Controller">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod3_title">AirL Horizon 2000-nit RC</h3>
+          <p class="prod-desc" data-i18n="acc_prod3_desc">Професійний пульт із вбудованим 7" надяскравим екраном, антенами O4+ та 6 годинами автономності.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$599</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'controller-pro', name:'AirL Horizon 2000-nit RC', price:599, img:'assets/images/smart-controller.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+
+        <!-- 4. Tactical Travel Shoulder Bag -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/flymore-kit.jpg" alt="Travel Bag">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod4_title">Tactical Expedition Bag IP67</h3>
+          <p class="prod-desc" data-i18n="acc_prod4_desc">Герметична сумка з Cordura для безпечного перевезення дрона, 4 акумуляторів та пульта у дощ і шторм.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$129</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'bag-ip67', name:'Tactical Expedition Bag IP67', price:129, img:'assets/images/flymore-kit.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+
+        <!-- 5. 100W Fast Charging Station -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/smart-battery.jpg" alt="Charging Hub">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod5_title">100W Parallel Charging Hub</h3>
+          <p class="prod-desc" data-i18n="acc_prod5_desc">Заряджає 3 акумулятори одночасно за 65 хвилин. Може працювати як потужний PowerBank для телефону.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$89</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'hub-100w', name:'100W Charging Hub', price:89, img:'assets/images/smart-battery.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+
+        <!-- 6. Carbon Low-Noise Propellers -->
+        <div class="prod-card">
+          <div class="prod-img-box">
+            <img src="assets/images/hero-drone.jpg" alt="Carbon Propellers">
+          </div>
+          <div class="badge-tag" style="margin-bottom: 8px;">
+            <span class="dot"></span>
+            <span data-i18n="in_stock">В наявності для подорожей</span>
+          </div>
+          <h3 class="prod-name" data-i18n="acc_prod6_title">Stealth Carbon Propellers (4x)</h3>
+          <p class="prod-desc" data-i18n="acc_prod6_desc">Складані карбонові гвинти, що зменшують рівень шуму на 60% для зйомки диких тварин та природи.</p>
+          <div class="prod-footer">
+            <span class="prod-price">$39</span>
+            <button class="btn-bundle-order" style="width:auto; padding:8px 18px;" onclick="addToCart({id:'props-carbon', name:'Stealth Carbon Propellers', price:39, img:'assets/images/hero-drone.jpg'})" data-i18n="btn_add_cart">До кошика</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3 class="font-display" data-i18n="cart_title">Ваш тревел-кошик</h3>
+      <button class="cart-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <div class="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span data-i18n="cart_total">Разом:</span>
+        <span class="cart-total-num">$0</span>
+      </div>
+      <p style="font-size:0.75rem; color:var(--c-glacial-ice); margin-bottom:14px;" data-i18n="cart_shipping_free">
+        Безкоштовна доставка по всьому світу включена
+      </p>
+      <button class="btn-checkout" data-i18n="cart_checkout_btn">Оформити замовлення</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="site-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+              <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+              <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+            </svg>
+            <span>AirL</span>
+          </div>
+          <p data-i18n="footer_desc">Інноваційні надлегкі кінематографічні дрони та обладнання для мандрівників.</p>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_quick_links">Навігація</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" data-i18n="nav_home">Головна (AirL—7)</a></li>
+            <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+            <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+            <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_travel_resources">Ресурси для мандрівників</h4>
+          <ul class="footer-links">
+            <li><a href="support.html#regulations" data-i18n="footer_air_rules">Правила польотів у подорожах</a></li>
+            <li><a href="support.html#batteries" data-i18n="footer_battery_guide">Гід із LiPo батарей у літаку</a></li>
+            <li><a href="support.html#warranty" data-i18n="footer_warranty">Глобальна заміна Care</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_newsletter_title">AirL Expedition Club</h4>
+          <p style="font-size:0.85rem;" data-i18n="footer_newsletter_sub">Отримуйте оновлення прошивок та тревел-гіди.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer_rights">© 2026 AirL Aerial Technologies. Усі права захищено. Сертифіковано AIRSAFE.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/translations.js?v=3.2"></script>
+  <script src="js/main.js?v=3.2"></script>
+</body>
+</html>

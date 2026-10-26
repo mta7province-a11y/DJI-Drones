@@ -1,0 +1,258 @@
+/* ==========================================================================
+   AIRL RESPONSIVE STYLES (Mobile, Tablet, Desktop)
+   Mobile-first adaptations, touch optimization, hamburger HUD drawer
+   ========================================================================== */
+
+/* Mobile Nav Drawer */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 320px;
+  max-width: 85%;
+  height: 100%;
+  background: rgba(4, 20, 16, 0.98);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid var(--c-border-subtle);
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 24px;
+  transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 20px 0 60px rgba(0, 0, 0, 0.9);
+}
+
+.mobile-nav-drawer.open {
+  left: 0;
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--c-border-subtle);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: auto;
+}
+
+.mobile-nav-links a {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-nav-links a:hover, .mobile-nav-links a.active {
+  color: var(--c-neon-lime);
+}
+
+.mobile-nav-footer {
+  border-top: 1px solid var(--c-border-subtle);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* TABLET BREAKPOINT (<= 1024px) */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none; /* Switch to hamburger menu */
+  }
+
+  .hero-cockpit {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .cockpit-center-arch {
+    grid-column: span 2;
+    order: -1;
+    border-radius: var(--radius-md);
+    border-bottom: 1px solid var(--c-border-subtle);
+    padding: 24px;
+  }
+
+  .hero-left-card {
+    display: none; /* Reduced clutter on medium screens */
+  }
+
+  .hero-magnetic-btn {
+    left: 20%;
+    top: 60%;
+    width: 90px;
+    height: 90px;
+  }
+
+  .bento-camera {
+    grid-column: span 12;
+    min-height: 380px;
+  }
+
+  .bento-safety {
+    grid-column: span 12;
+    min-height: 360px;
+  }
+
+  .bento-battery {
+    grid-column: span 6;
+  }
+
+  .bento-controller {
+    grid-column: span 6;
+  }
+
+  .bento-trans-neon {
+    grid-column: span 12;
+    min-height: 260px;
+  }
+
+  .bundle-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bundle-card.popular {
+    order: -1;
+  }
+
+  .motion-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* MOBILE PHONES (<= 768px) */
+@media (max-width: 768px) {
+  :root {
+    --margin-desktop: 20px;
+    --gutter: 14px;
+  }
+
+  .site-header {
+    height: 70px;
+  }
+
+  .header-inner {
+    height: 70px;
+  }
+
+  .hero-section {
+    padding-top: 90px;
+    padding-bottom: 40px;
+  }
+
+  .hero-visual-stage {
+    margin-top: 10px;
+  }
+
+  .hero-badge-flight {
+    top: 15%;
+    right: 4%;
+    padding: 6px 12px;
+  }
+
+  .hero-right-meta {
+    position: static;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .hero-cinema-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-magnetic-btn {
+    position: static;
+    margin: 20px auto 0;
+    width: 80px;
+    height: 80px;
+  }
+
+  .hero-cockpit {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+
+  .cockpit-center-arch {
+    grid-column: span 1;
+    padding: 20px 16px;
+  }
+
+  .cockpit-headline {
+    font-size: 1.05rem;
+  }
+
+  /* Anatomy on Mobile */
+  .anatomy-callout {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .callout-top-right, .callout-bottom-right,
+  .callout-top-left, .callout-bottom-left {
+    position: static;
+  }
+
+  .anatomy-specs-bar {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .metric-item {
+    border-right: none;
+    border-bottom: 1px solid var(--c-border-subtle);
+    padding-bottom: 12px;
+  }
+
+  .metric-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Bento on Mobile */
+  .bento-battery, .bento-controller {
+    grid-column: span 12;
+  }
+
+  .bento-card {
+    padding: 24px 18px;
+  }
+
+  /* Cart Drawer */
+  .cart-drawer {
+    width: 100%;
+  }
+
+  /* Footer on Mobile */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}

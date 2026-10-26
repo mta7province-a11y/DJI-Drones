@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title_drones">AirL — Drone Fleet | Кишенькові та кінематографічні дрони для подорожей</title>
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/responsive.css?v=3.2">
+  <style>
+    .fleet-hero {
+      padding: 140px 0 60px;
+      text-align: center;
+    }
+    .fleet-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 16px;
+    }
+    .drone-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gutter);
+      margin-top: 50px;
+    }
+    .fleet-card {
+      background: var(--c-surface-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+      position: relative;
+    }
+    .fleet-card:hover {
+      border-color: var(--c-border-active);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+    .fleet-card.featured {
+      border: 2px solid var(--c-neon-lime);
+      background: radial-gradient(circle at 50% 0%, rgba(230, 255, 85, 0.08) 0%, rgba(4, 45, 34, 0.45) 80%);
+    }
+    .fleet-card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+    }
+    .fleet-spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0;
+      flex-grow: 1;
+    }
+    .fleet-spec-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(201, 220, 234, 0.08);
+      padding-bottom: 8px;
+    }
+    .fleet-spec-row .spec-name {
+      color: var(--c-glacial-ice);
+    }
+    .fleet-spec-row .spec-val {
+      font-family: var(--font-display);
+      color: #fff;
+    }
+    .comparison-table-wrap {
+      margin-top: 80px;
+      background: var(--c-surface-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      overflow-x: auto;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(201, 220, 234, 0.1);
+      font-size: 0.9rem;
+    }
+    .comparison-table th {
+      font-family: var(--font-display);
+      color: var(--c-neon-lime);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+    }
+    .comparison-table td.highlight {
+      color: var(--c-neon-lime);
+      font-weight: 700;
+      font-family: var(--font-display);
+    }
+    @media (max-width: 1024px) {
+      .drone-card-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 40px auto 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle-btn" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="drones.html" class="active" data-i18n="nav_drones">Дрони</a></li>
+          <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+          <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          <li><a href="support.html" data-i18n="nav_support">Підтримка</a></li>
+        </ul>
+      </div>
+
+      <a href="index.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </a>
+
+      <div class="header-right">
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <span class="lang-globe-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </span>
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <span class="lang-divider"></span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <button class="cart-btn" aria-label="View Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </button>
+
+        <button class="btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:24px; height:24px;">
+          <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+          <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+        </svg>
+        <span>AirL</span>
+      </div>
+      <button class="mobile-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="drones.html" class="active" data-i18n="nav_drones">Дрони <span>&rarr;</span></a></li>
+      <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари <span>&rarr;</span></a></li>
+      <li><a href="stories.html" data-i18n="nav_stories">Історії <span>&rarr;</span></a></li>
+      <li><a href="support.html" data-i18n="nav_support">Підтримка <span>&rarr;</span></a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <div class="lang-switch" role="group" aria-label="Language selector" style="width:fit-content;">
+        <span class="lang-globe-icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+        <button class="lang-btn active" data-lang="ua">UA</button>
+        <span class="lang-divider"></span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="btn-checkout btn-preorder-nav" data-i18n="nav_preorder">ПЕРЕДЗАМОВЛЕННЯ</button>
+    </div>
+  </aside>
+
+  <!-- Fleet Hero -->
+  <section class="fleet-hero">
+    <div class="container">
+      <div class="badge-tag">
+        <span class="dot"></span>
+        <span data-i18n="drone_fleet_badge">AERIAL FLEET 2026</span>
+      </div>
+      <h1 data-i18n="page_drones_title">Модельний ряд дронів AirL</h1>
+      <p data-i18n="page_drones_sub" style="max-width: 650px; margin: 0 auto;">
+        Створені для свободи пересування. Від кишенькових 199г до гірських експедиційних кіноплатформ.
+      </p>
+
+      <!-- Drone Cards Grid -->
+      <div class="drone-card-grid">
+        <!-- 1. AirL Nano Go -->
+        <div class="fleet-card">
+          <div class="badge-tag" style="margin-bottom: 12px;">
+            <span class="dot"></span>
+            <span data-i18n="tag_backpacker">BACKPACKER</span>
+          </div>
+          <img src="assets/images/nd-filters.jpg" alt="AirL Nano Go" class="fleet-card-img">
+          <h3 class="font-display" style="font-size: 1.4rem; color: #fff;">AirL Nano Go</h3>
+          <p style="font-size: 0.85rem; margin-top: 4px;" data-i18n="nano_desc">Кишеньковий дрон для хайкінгу з вертикальною зйомкою для соцмереж.</p>
+          
+          <ul class="fleet-spec-list">
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_weight_lbl">Вага:</span>
+              <span class="spec-val text-lime" data-i18n="spec_val_199g">199 г</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_sensor_lbl">Сенсор:</span>
+              <span class="spec-val">1/1.3" 48MP HDR</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_video_lbl">Відео:</span>
+              <span class="spec-val">4K / 60p Vertical</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_flight_time_lbl">Час польоту:</span>
+              <span class="spec-val" data-i18n="spec_val_34min">34 хв</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_range_lbl">Дальність:</span>
+              <span class="spec-val" data-i18n="spec_val_10km">10 км O3</span>
+            </li>
+          </ul>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+            <span class="font-display" style="font-size:1.5rem; color:#fff;">$699</span>
+            <button class="btn-preorder-nav" onclick="addToCart({id:'nano-go', name:'AirL Nano Go', price:699, img:'assets/images/nd-filters.jpg'})" data-i18n="drone_btn_order">Конфігурувати</button>
+          </div>
+        </div>
+
+        <!-- 2. AirL—7 (Flagship Featured) -->
+        <div class="fleet-card featured">
+          <span class="bundle-badge" data-i18n="tag_cinema_flagship">ФЛАГМАН ДЛЯ КІНО</span>
+          <img src="assets/images/hero-drone.jpg" alt="AirL-7 Flagship" class="fleet-card-img">
+          <h3 class="font-display" style="font-size: 1.4rem; color: #fff;">AirL—7 Cinema</h3>
+          <p style="font-size: 0.85rem; margin-top: 4px;" data-i18n="airl7_desc">Кінематографічна 8K платформа у класі до 249г без бюрократичної реєстрації.</p>
+          
+          <ul class="fleet-spec-list">
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_weight_lbl">Вага:</span>
+              <span class="spec-val text-lime" data-i18n="spec_val_249g">249 г (Sub-250)</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_sensor_lbl">Сенсор:</span>
+              <span class="spec-val">1" 50MP Sony Cine</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_video_lbl">Відео:</span>
+              <span class="spec-val">8K/60 HDR D-Log</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_flight_time_lbl">Час польоту:</span>
+              <span class="spec-val text-lime" data-i18n="spec_val_46min">46 хв</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_range_lbl">Дальність:</span>
+              <span class="spec-val" data-i18n="spec_val_15km">15 км O4+</span>
+            </li>
+          </ul>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+            <span class="font-display" style="font-size:1.5rem; color:#fff;">$1,299</span>
+            <button class="btn-bundle-order" style="width:auto; padding:10px 24px;" onclick="addToCart({id:'airl-7-standard', name:'AirL—7 Cinema Drone', price:1299, img:'assets/images/hero-drone.jpg'})" data-i18n="drone_btn_order">Конфігурувати</button>
+          </div>
+        </div>
+
+        <!-- 3. AirL Voyager X -->
+        <div class="fleet-card">
+          <div class="badge-tag" style="margin-bottom: 12px;">
+            <span class="dot"></span>
+            <span data-i18n="tag_expedition_pro">EXPEDITION PRO</span>
+          </div>
+          <img src="assets/images/drone-anatomy.jpg" alt="AirL Voyager X" class="fleet-card-img">
+          <h3 class="font-display" style="font-size: 1.4rem; color: #fff;">AirL Voyager X</h3>
+          <p style="font-size: 0.85rem; margin-top: 4px;" data-i18n="voyager_desc">Важкий експедиційний дрон із подвійною оптикою для високогір'я та штормів.</p>
+          
+          <ul class="fleet-spec-list">
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_weight_lbl">Вага:</span>
+              <span class="spec-val" data-i18n="spec_val_790g">790 г</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_sensor_lbl">Сенсор:</span>
+              <span class="spec-val">Dual 8K + 7x Tele</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_video_lbl">Відео:</span>
+              <span class="spec-val">8K ProRes 4444</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_flight_time_lbl">Час польоту:</span>
+              <span class="spec-val text-lime" data-i18n="spec_val_52min">52 хв</span>
+            </li>
+            <li class="fleet-spec-row">
+              <span class="spec-name" data-i18n="spec_range_lbl">Дальність:</span>
+              <span class="spec-val" data-i18n="spec_val_20km">20 км Enterprise</span>
+            </li>
+          </ul>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+            <span class="font-display" style="font-size:1.5rem; color:#fff;">$2,499</span>
+            <button class="btn-preorder-nav" onclick="addToCart({id:'voyager-x', name:'AirL Voyager X', price:2499, img:'assets/images/drone-anatomy.jpg'})" data-i18n="drone_btn_order">Конфігурувати</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparative Spec Table -->
+      <div class="comparison-table-wrap">
+        <h3 class="font-display" style="margin-bottom: 24px;" data-i18n="drone_btn_specs">Порівняти характеристики</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th data-i18n="th_parameter">Параметр</th>
+              <th>AirL Nano Go</th>
+              <th>AirL—7 Cinema</th>
+              <th>AirL Voyager X</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="td_takeoff_weight">Злітна маса</td>
+              <td data-i18n="spec_val_199g">199 г</td>
+              <td class="highlight" data-i18n="td_airl7_weight">249 г (Sub-250 без ліцензій)</td>
+              <td data-i18n="spec_val_790g">790 г</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_sensor_res">Роздільна здатність сенсора</td>
+              <td>48 MP (1/1.3")</td>
+              <td class="highlight">50 MP (1" Cinema CMOS)</td>
+              <td>50 MP + 48 MP Tele (Dual)</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_max_video">Максимальне відео</td>
+              <td>4K / 60fps HDR</td>
+              <td class="highlight">8K / 60fps 10-bit D-Log</td>
+              <td>8K / 60fps Apple ProRes 4444</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_air_time">Час перебування в повітрі</td>
+              <td data-i18n="spec_val_34min">34 хв</td>
+              <td class="highlight" data-i18n="spec_val_46min">46 хв</td>
+              <td data-i18n="spec_val_52min">52 хв</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_wind_resistance">Опір вітру</td>
+              <td data-i18n="td_wind_nano">10.7 м/с (Рівень 5)</td>
+              <td class="highlight" data-i18n="td_wind_airl7">15.0 м/с (Рівень 6)</td>
+              <td data-i18n="td_wind_voyager">18.5 м/с (Рівень 7)</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_obstacle_system">Система розпізнавання перешкод</td>
+              <td data-i18n="td_obs_nano">Передні + Нижні сенсори</td>
+              <td class="highlight" data-i18n="td_obs_airl7">360° LiDAR + 8 оптичних камер</td>
+              <td data-i18n="td_obs_voyager">360° всеспрямований + Радар</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_internal_storage">Внутрішній накопичувач</td>
+              <td>64 GB</td>
+              <td class="highlight">128 GB / 512 GB SSD</td>
+              <td>1 TB NVMe SSD</td>
+            </tr>
+            <tr>
+              <td data-i18n="td_price">Ціна</td>
+              <td>$699</td>
+              <td class="highlight">$1,299</td>
+              <td>$2,499</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3 class="font-display" data-i18n="cart_title">Ваш тревел-кошик</h3>
+      <button class="cart-close-btn modal-close-btn" style="position:static;">&times;</button>
+    </div>
+    <div class="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span data-i18n="cart_total">Разом:</span>
+        <span class="cart-total-num">$0</span>
+      </div>
+      <p style="font-size:0.75rem; color:var(--c-glacial-ice); margin-bottom:14px;" data-i18n="cart_shipping_free">
+        Безкоштовна доставка по всьому світу включена
+      </p>
+      <button class="btn-checkout" data-i18n="cart_checkout_btn">Оформити замовлення</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="site-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+              <polygon points="16,2 30,28 22,28 16,14 10,28 2,28" fill="currentColor"/>
+              <polygon points="16,9 22,22 10,22" fill="var(--c-neon-lime)"/>
+            </svg>
+            <span>AirL</span>
+          </div>
+          <p data-i18n="footer_desc">Інноваційні надлегкі кінематографічні дрони та обладнання для мандрівників.</p>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_quick_links">Навігація</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" data-i18n="nav_home">Головна (AirL—7)</a></li>
+            <li><a href="drones.html" data-i18n="nav_drones">Дрони</a></li>
+            <li><a href="accessories.html" data-i18n="nav_accessories">Аксесуари</a></li>
+            <li><a href="stories.html" data-i18n="nav_stories">Історії</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_travel_resources">Ресурси для мандрівників</h4>
+          <ul class="footer-links">
+            <li><a href="support.html#regulations" data-i18n="footer_air_rules">Правила польотів у подорожах</a></li>
+            <li><a href="support.html#batteries" data-i18n="footer_battery_guide">Гід із LiPo батарей у літаку</a></li>
+            <li><a href="support.html#warranty" data-i18n="footer_warranty">Глобальна заміна Care</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title" data-i18n="footer_newsletter_title">AirL Expedition Club</h4>
+          <p style="font-size:0.85rem;" data-i18n="footer_newsletter_sub">Отримуйте оновлення прошивок та тревел-гіди.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer_rights">© 2026 AirL Aerial Technologies. Усі права захищено. Сертифіковано AIRSAFE.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/translations.js?v=3.2"></script>
+  <script src="js/main.js?v=3.2"></script>
+</body>
+</html>

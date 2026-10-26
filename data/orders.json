@@ -1,0 +1,70 @@
+[
+  {
+    "orderId": "AIRL-ORD-MUBGCQS4-673",
+    "type": "direct_checkout",
+    "date": "2026-09-21T16:21:16.564Z",
+    "items": [
+      {
+        "price": 1649,
+        "name": "AirL-7 Fly More Combo",
+        "id": "airl-7-flymore",
+        "qty": 1
+      }
+    ],
+    "total": 1649,
+    "currency": "USD",
+    "customer": {
+      "email": "creator@expedition.org",
+      "name": "Travel Creator",
+      "country": "Ukraine"
+    },
+    "shipping": {
+      "type": "Express Worldwide Courier",
+      "cost": 0,
+      "status": "processing"
+    }
+  },
+  {
+    "orderId": "AIRL-ORD-MUBGXJQ1-818",
+    "type": "direct_checkout",
+    "date": "2026-09-21T16:37:27.193Z",
+    "items": [
+      {
+        "price": 129,
+        "name": "Tactical Expedition Bag IP67",
+        "id": "bag-ip67",
+        "qty": 1
+      },
+      {
+        "price": 89,
+        "name": "100W Charging Hub",
+        "id": "hub-100w",
+        "qty": 1
+      },
+      {
+        "price": 1649,
+        "name": "AirL-7 Fly More Bundle",
+        "id": "airl-7-flymore",
+        "qty": 2
+      },
+      {
+        "price": 1299,
+        "name": "AirL-7 Cinema Drone",
+        "id": "airl-7-standard",
+        "qty": 1
+      }
+    ],
+    "total": 5514,
+    "currency": "USD",
+    "customer": {
+      "email": "creator@alpine.world",
+      "name": "Travel Creator (Screenshot Test)",
+      "country": "Ukraine"
+    },
+    "shipping": {
+      "type": "Express Worldwide Courier",
+      "cost": 0,
+      "status": "processing"
+    }
+  }
+]
